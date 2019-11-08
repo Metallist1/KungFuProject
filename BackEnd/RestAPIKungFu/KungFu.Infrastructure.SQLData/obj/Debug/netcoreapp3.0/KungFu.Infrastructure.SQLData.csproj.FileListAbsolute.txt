@@ -1,0 +1,4 @@
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Infrastructure.SQLData\bin\Debug\netcoreapp3.0\KungFu.Entity.dll
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Infrastructure.SQLData\obj\Debug\netcoreapp3.0\KungFu.Infrastructure.SQLData.csprojAssemblyReference.cache
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Infrastructure.SQLData\obj\Debug\netcoreapp3.0\KungFu.Infrastructure.SQLData.AssemblyInfoInputs.cache
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Infrastructure.SQLData\obj\Debug\netcoreapp3.0\KungFu.Infrastructure.SQLData.AssemblyInfo.cs

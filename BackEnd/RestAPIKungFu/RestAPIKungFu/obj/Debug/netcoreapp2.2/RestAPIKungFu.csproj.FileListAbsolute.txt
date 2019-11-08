@@ -1,0 +1,2 @@
+C:\Users\nedas\source\repos\RestAPIKungFu\RestAPIKungFu\obj\Debug\netcoreapp2.2\RestAPIKungFu.AssemblyInfoInputs.cache
+C:\Users\nedas\source\repos\RestAPIKungFu\RestAPIKungFu\obj\Debug\netcoreapp2.2\RestAPIKungFu.AssemblyInfo.cs

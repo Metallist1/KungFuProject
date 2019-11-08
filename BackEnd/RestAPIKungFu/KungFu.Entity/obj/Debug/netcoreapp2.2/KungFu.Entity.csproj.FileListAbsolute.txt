@@ -1,0 +1,16 @@
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.deps.json
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.dll
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.pdb
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.csprojAssemblyReference.cache
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.AssemblyInfoInputs.cache
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.AssemblyInfo.cs
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.dll
+C:\Users\nedas\source\repos\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.pdb
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.deps.json
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.dll
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\bin\Debug\netcoreapp2.2\KungFu.Entity.pdb
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.csprojAssemblyReference.cache
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.AssemblyInfoInputs.cache
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.AssemblyInfo.cs
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.dll
+C:\Users\nedas\Desktop\Everything\School\AngularProjects\KC\BackEnd\RestAPIKungFu\KungFu.Entity\obj\Debug\netcoreapp2.2\KungFu.Entity.pdb
