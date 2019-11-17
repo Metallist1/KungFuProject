@@ -16,12 +16,11 @@ namespace KungFu.Core.ApplictionService.HelperServices
         {
             secretBytes = secret;
         }
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public (byte[] passwordHash, byte[] passwordSalt) CreatePasswordHash(string password)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return (hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)), hmac.Key);
             }
         }
 
@@ -61,6 +60,11 @@ namespace KungFu.Core.ApplictionService.HelperServices
                                DateTime.Now.AddMinutes(10)));  // expires
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public string RefreshToken(string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }

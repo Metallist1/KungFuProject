@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KungFu.Core.ApplictionService;
+﻿using KungFu.Core.ApplictionService;
 using KungFu.Entity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace RestAPI.Controllers
 {
@@ -43,11 +41,18 @@ namespace RestAPI.Controllers
 
         // POST: api/Login
         [HttpPost]
-        public IActionResult Post([FromBody] LoggingInEntity attemptAtLogin)
+        public IActionResult Post([FromBody] JObject data)
         {
             try
             {
-                return Ok(_userService.ValidateUser(attemptAtLogin));
+                var validatedUser = _userService.ValidateUser(new Tuple<string, string>(data["Username"].ToString(), data["Password"].ToString()));
+
+                return Ok(new
+                {
+                    Username = validatedUser.Item1,
+                    Token = validatedUser.Item2,
+                    IsAdmin = validatedUser.Item3
+                });
             }
             catch (Exception e)
             {

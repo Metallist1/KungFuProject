@@ -21,10 +21,9 @@ namespace KungFu.Infrastructure.SQLData
         // Create two users with hashed and salted passwords
             string password = "Nedass";
             string password2 = "Yoda";
-            byte[] passwordHashUser1, passwordSaltUser1, passwordHashUser2, passwordSaltUser2;
-            _authentication.CreatePasswordHash(password, out passwordHashUser1, out passwordSaltUser1);
-            _authentication.CreatePasswordHash(password2, out passwordHashUser2, out passwordSaltUser2);
 
+            var (passwordHashUser1, passwordSaltUser1) = _authentication.CreatePasswordHash(password);
+            var (passwordHashUser2, passwordSaltUser2) = _authentication.CreatePasswordHash(password2);
             User user1 = new User()
             {
                 UserName = "Nedas",
@@ -32,6 +31,7 @@ namespace KungFu.Infrastructure.SQLData
                 PasswordSalt = passwordSaltUser1,
                 IsAdmin = true
             };
+
             User user2 = new User()
             {
                 UserName = "CBT",

@@ -8,7 +8,7 @@ namespace KungFu.Core.ApplictionService
     public interface IUserService
     {
 
-        LoggedInEntity ValidateUser(LoggingInEntity user);
+        Tuple<string, string, Boolean> ValidateUser(Tuple<string, string> attemptToLogin);
 
         List<User> GetAllUsers();
     }

@@ -19,30 +19,24 @@ namespace KungFu.Core.ApplictionService.Service
 
         public List<User> GetAllUsers()
         {
-           return _userRepo.GetUsers().ToList() ;
+           return _userRepo.GetUsers().ToList();
         }
 
-        public LoggedInEntity ValidateUser(LoggingInEntity attemptAtLogin)
+        public Tuple<string, string, Boolean> ValidateUser(Tuple<string, string> attemptAtLogin)
         {
-            var user = _userRepo.GetUsers().ToList().FirstOrDefault(u => u.UserName == attemptAtLogin.UserName);
+            var user = _userRepo.GetUsers().ToList().FirstOrDefault(u => u.UserName == attemptAtLogin.Item1);
 
             if(user == null)
             {
                 throw new ArgumentException("Invalid User");
             }
 
-            if (!_authentication.VerifyPasswordHash(attemptAtLogin.PassWord, user.PasswordHash, user.PasswordSalt))
+            if (!_authentication.VerifyPasswordHash(attemptAtLogin.Item2, user.PasswordHash, user.PasswordSalt))
             {
                 throw new ArgumentException("Invalid password");
             }
 
-            LoggedInEntity ent = new LoggedInEntity()
-            {
-                UserName = user.UserName,
-                Token = _authentication.GenerateToken(user),
-                IsAdmin = user.IsAdmin,
-            };
-            return ent;
+            return new Tuple<string, string, Boolean>(user.UserName, _authentication.GenerateToken(user), user.IsAdmin); 
         }
     }
 }
