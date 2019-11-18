@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
-using KungFu.Entity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace KungFu.Core.ApplictionService.HelperServices
 {
@@ -12,15 +13,16 @@ namespace KungFu.Core.ApplictionService.HelperServices
     {
         private byte[] secretBytes;
 
-        public Authentication(Byte[] secret)
+        public Authentication(byte[] secret)
         {
             secretBytes = secret;
         }
+
         public (byte[] passwordHash, byte[] passwordSalt) CreatePasswordHash(string password)
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
-                return (hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password)), hmac.Key);
+                return (hmac.ComputeHash(Encoding.UTF8.GetBytes(password)), hmac.Key);
             }
         }
 
@@ -28,43 +30,57 @@ namespace KungFu.Core.ApplictionService.HelperServices
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != storedHash[i]) return false;
-                }
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                if (!computedHash.SequenceEqual(storedHash)) return false;
             }
+
             return true;
         }
 
-
         // This method generates and returns a JWT token for a user.
-        public string GenerateToken(User user)
+        public string GenerateToken(IEnumerable<Claim> claims)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName)
-            };
-
-            if (user.IsAdmin)
-                claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
-
             var token = new JwtSecurityToken(
                 new JwtHeader(new SigningCredentials(
                     new SymmetricSecurityKey(secretBytes),
                     SecurityAlgorithms.HmacSha256)),
                 new JwtPayload(null, // issuer - not needed (ValidateIssuer = false)
-                               null, // audience - not needed (ValidateAudience = false)
-                               claims.ToArray(),
-                               DateTime.Now,               // notBefore
-                               DateTime.Now.AddMinutes(10)));  // expires
+                    null, // audience - not needed (ValidateAudience = false)
+                    claims.ToArray(),
+                    DateTime.Now, // notBefore
+                    DateTime.Now.AddSeconds(10))); // expires in 10 S!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! For real world. Change to hours / minutes
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string RefreshToken(string token)
+        public string GenerateRefreshToken()
         {
-            throw new NotImplementedException();
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+
+        public ClaimsPrincipal getExpiredPrincipal(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+                ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken); //Validates the token to fit parameters. Prevents temperaing with token.
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase)) //Check if token exists and if its ecnrypted in right way
+                throw new SecurityTokenException("Invalid token");
+
+            return principal;
         }
     }
 }

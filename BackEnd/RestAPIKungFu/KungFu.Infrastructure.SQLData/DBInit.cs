@@ -1,13 +1,10 @@
 ﻿using KungFu.Core.ApplictionService;
 using KungFu.Core.DomainService;
 using KungFu.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KungFu.Infrastructure.SQLData
 {
-    public  class DBInit: IDBInit
+    public class DBInit : IDBInit
     {
         private IAuthentication _authentication;
 
@@ -15,28 +12,31 @@ namespace KungFu.Infrastructure.SQLData
         {
             _authentication = authHelper;
         }
+
         public void SeedDatabase(KungFuContext ctx)
         {
-
-        // Create two users with hashed and salted passwords
+            // Create two users with hashed and salted passwords
             string password = "Nedass";
             string password2 = "Yoda";
 
             var (passwordHashUser1, passwordSaltUser1) = _authentication.CreatePasswordHash(password);
             var (passwordHashUser2, passwordSaltUser2) = _authentication.CreatePasswordHash(password2);
+
             User user1 = new User()
             {
-                UserName = "Nedas",
+                Username = "Nedas",
                 PasswordHash = passwordHashUser1,
                 PasswordSalt = passwordSaltUser1,
+                RefreshToken = null,
                 IsAdmin = true
             };
 
             User user2 = new User()
             {
-                UserName = "CBT",
+                Username = "CBT",
                 PasswordHash = passwordHashUser2,
                 PasswordSalt = passwordSaltUser2,
+                RefreshToken = null,
                 IsAdmin = false
             };
             ctx.Users.Add(user1);

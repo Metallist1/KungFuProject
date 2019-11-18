@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KungFu.Core.ApplictionService;
+﻿using KungFu.Core.ApplictionService;
 using KungFu.Core.ApplictionService.HelperServices;
 using KungFu.Core.ApplictionService.Service;
 using KungFu.Core.DomainService;
@@ -11,14 +7,12 @@ using KungFu.Infrastructure.SQLData.Repo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace RestAPI
 {
@@ -28,7 +22,6 @@ namespace RestAPI
         {
             Configuration = configuration;
             Environment = env;
-
         }
 
         public IConfiguration Configuration { get; }
@@ -50,20 +43,15 @@ namespace RestAPI
                     ValidateIssuer = false,
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
-                    ValidateLifetime = true, 
-                    ClockSkew = TimeSpan.FromMinutes(5) 
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(5)
                 };
             });
-
-
-
 
             services.AddCors();
             if (Environment.IsDevelopment())
             {
-                services.AddDbContext<KungFuContext>(opt => {
-                    opt.UseSqlite("Data Source=kungfuApp.db");
-                }
+                services.AddDbContext<KungFuContext>(opt => { opt.UseSqlite("Data Source=kungfuApp.db"); }
                 );
             }
             else
@@ -71,7 +59,9 @@ namespace RestAPI
                 services.AddDbContext<KungFuContext>(opt =>
                     opt.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
             }
+
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddTransient<IDBInit, DBInit>();
@@ -82,7 +72,6 @@ namespace RestAPI
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -99,19 +88,16 @@ namespace RestAPI
             }
             else
             {
-             app.UseHsts();
+                app.UseHsts();
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var ctx = scope.ServiceProvider.GetService<KungFuContext>();
                     ctx.Database.EnsureCreated();
-
                 }
             }
+
             app.UseHttpsRedirection();
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            });
+            app.UseCors(builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
             app.UseAuthentication();
             app.UseMvc();
         }

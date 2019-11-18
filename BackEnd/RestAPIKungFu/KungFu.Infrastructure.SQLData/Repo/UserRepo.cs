@@ -1,8 +1,7 @@
 ﻿using KungFu.Core.DomainService;
 using KungFu.Entity;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Text;
 
 namespace KungFu.Infrastructure.SQLData.Repo
 {
@@ -20,9 +19,10 @@ namespace KungFu.Infrastructure.SQLData.Repo
             return _ctx.Users;
         }
 
-        public User ValidateUser(User user)
+        public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            _ctx.Attach(user).State = EntityState.Modified;
+            _ctx.SaveChanges();
         }
     }
 }
