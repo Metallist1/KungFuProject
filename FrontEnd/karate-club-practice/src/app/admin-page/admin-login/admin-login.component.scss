@@ -1,0 +1,26 @@
+
+.custom-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.px-4{
+  align-items: stretch;
+  width: 30%;
+  border: 1px rgba(47, 42, 124, 0.91);
+  border-style: solid;
+  background: #4894ea;
+  background: rgba(47, 42, 124, 0.71);
+  border-radius: 15px;
+}
+
+.white-text{
+  color: rgba(255, 255, 255, 0.89);
+}
+
+.form-check-label{
+  margin-bottom: 1rem;
+}

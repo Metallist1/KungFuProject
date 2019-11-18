@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+html, body, app-root {
+  height: 100%;
+  margin: 0;
+}
+* {box-sizing: border-box;}
+@font-face {
+  font-family: NerisLight;
+  src: url('src/assets/fonts/nerislight.otf');
+}
+header {
+  font-family: 'NerisLight';
+  color: white;
+}
+footer {
+  font-family: 'NerisLight';
+  color: white;
+}
+@import '~bootstrap/dist/css/bootstrap.css';

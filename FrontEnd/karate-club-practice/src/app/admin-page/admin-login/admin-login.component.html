@@ -1,0 +1,30 @@
+<div class = "custom-container" id="backgroundContainer">
+
+<form class="px-4 py-3"  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label class="white-text" for="DropdownFormUsername">Username</label>
+    <input type="email" class="form-control" id="DropdownFormUsername" placeholder="Metalist1" formControlName="username"  required/>
+    <div *ngIf="username.invalid && submitted" class="alert-danger">
+      <div *ngIf="username.errors.required">Username is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="white-text" for="exampleDropdownFormPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password" formControlName="password" required/>
+    <div *ngIf="password.invalid && submitted" class="alert-danger">
+      <div *ngIf="password.errors.required">Password is required</div>
+    </div>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="dropdownCheck">
+    <label  class="form-check-label white-text" for="dropdownCheck">
+      Remember me
+    </label>
+  </div>
+  <div class="form-group">
+  <button type="submit" class="btn btn-primary">Sign in</button>
+    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+  <ngb-alert id="passwordAlert" *ngIf="alertSuccess" [type]="'danger'" (close)="alertSuccess = false">{{generalErrorMessage}}</ngb-alert>
+</form>
+</div>
